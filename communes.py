@@ -22,16 +22,19 @@ class Communes(NeuronModule):
 
             if response.status_code == 200: 
                 jsonresult = json.loads(response.text)
-                message = {
-                    "commune_asked": self.ville,
-                    "commune": jsonresult[0]["nom"],
-                    "code_post": jsonresult[0]["codesPostaux"][0],
-                    "surface": jsonresult[0]["surface"],
-                    "population": jsonresult[0]["population"],
-                    "code_department": jsonresult[0]["codeDepartement"],
-                    "department": jsonresult[0]["departement"]["nom"],
-                    "region": jsonresult[0]["region"]["nom"]
-                    }
+                for result in jsonresult:
+                    if result["nom"].lower() == self.ville.lower():
+                        message = {
+                            "commune_asked": self.ville,
+                            "commune": jsonresult[0]["nom"],
+                            "code_post": jsonresult[0]["codesPostaux"][0],
+                            "surface": jsonresult[0]["surface"],
+                            "population": jsonresult[0]["population"],
+                            "code_department": jsonresult[0]["codeDepartement"],
+                            "department": jsonresult[0]["departement"]["nom"],
+                            "region": jsonresult[0]["region"]["nom"]
+                            }
+                        break
             else: 
                 message = "no return"
 
@@ -46,8 +49,8 @@ class Communes(NeuronModule):
    #    """
         if self.ville is None:
             raise MissingParameterException("You must specify a fr country")
-    #   if not isinstance(self.arg2, int):
-    #       raise MissingParameterException("arg2 must be an integer")
+       if not isinstance(self.ville, str):
+            raise MissingParameterException("ville must be an string")
         return True
 
 # Exemple JSON respnse:
