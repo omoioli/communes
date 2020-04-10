@@ -49,7 +49,7 @@ class Communes(NeuronModule):
    #    """
         if self.ville is None:
             raise MissingParameterException("You must specify a fr country")
-       if not isinstance(self.ville, str):
+        if not isinstance(self.ville, str):
             raise MissingParameterException("ville must be an string")
         return True
 
