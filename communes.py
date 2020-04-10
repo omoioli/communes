@@ -1,4 +1,3 @@
-#import re
 import requests
 import json 
 from kalliope.core import NeuronModule
@@ -23,9 +22,22 @@ class Communes(NeuronModule):
 
             if response.status_code == 200: 
                 jsonresult = json.loads(response.text)
-                for result in jsonresult:
-                    if result["nom"].lower() == self.ville.lower():
-                        found = True
+                if len(jsonresult) > 0:
+                    for result in jsonresult:
+                        if result["nom"].lower() == self.ville.lower():
+                            found = True
+                            message = {
+                                "commune_asked": self.ville,
+                                "commune": result["nom"],
+                                "code_post": result["codesPostaux"][0],
+                                "surface": result["surface"],
+                                "population": result["population"],
+                                "code_department": result["codeDepartement"],
+                                "department": result["departement"]["nom"],
+                                "region": result["region"]["nom"]
+                                }
+                            break
+                    if not found:
                         message = {
                             "commune_asked": self.ville,
                             "commune": result["nom"],
@@ -36,20 +48,20 @@ class Communes(NeuronModule):
                             "department": result["departement"]["nom"],
                             "region": result["region"]["nom"]
                             }
-                        break
-                if not found:
+                else:
                     message = {
                         "commune_asked": self.ville,
-                        "commune": result["nom"],
-                        "code_post": result["codesPostaux"][0],
-                        "surface": result["surface"],
-                        "population": result["population"],
-                        "code_department": result["codeDepartement"],
-                        "department": result["departement"]["nom"],
-                        "region": result["region"]["nom"]
+                        "commune": none,
+                        "code_post": none,
+                        "surface": none,
+                        "population": none,
+                        "code_department": none,
+                        "department": none,
+                        "region": none
                         }
+                    
             else: 
-                message = "no return"
+                message = "Error"
 
             self.say(message)
             
