@@ -13,7 +13,7 @@ kalliope install --git-url https://github.com/omoioli/communes.git
 
 | Parameter   | Required | Type                             |
 |-------------|----------|----------------------------------|
-| ville       | yes      | str                              |
+| nom_ville   | yes      | str                              |
 
 
 
