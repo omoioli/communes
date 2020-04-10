@@ -32,6 +32,7 @@ kalliope install --git-url https://github.com/omoioli/communes.git
 
 ## Notes
 - if a country has multiple of 'code postal', only the first has dict
+- if the country doesn't exist, the neuron return 'inconnue' for each value 
 
 ## Synapses example
 ```
