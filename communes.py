@@ -37,7 +37,7 @@ class Communes(NeuronModule):
                             "region": result["region"]["nom"]
                             }
                         break
-                 if not found:
+                if not found:
                     message = {
                         "commune_asked": self.ville,
                         "commune": result["nom"],
