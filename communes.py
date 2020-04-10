@@ -5,7 +5,6 @@ from kalliope.core import NeuronModule
 
 api_url_base = "https://geo.api.gouv.fr/communes?nom="
 api_url_suite = "&fields=nom,codesPostaux,surface,codeDepartement,departement,codeRegion,region,population&format=json"
-api_geo = "https://geo.api.gouv.fr/communes?nom=mirande&fields=codeDepartement&format=json"
 headers = {'Content-Type': 'application/json'}
 
 class Communes(NeuronModule):
@@ -15,17 +14,20 @@ class Communes(NeuronModule):
         self.ville = kwargs.get("nom_ville", None)
         # get the response of api
         api_url = "{}{}{}".format(api_url_base, self.ville, api_url_suite)
-
         response = requests.get(api_url, headers=headers)
 
         if response.status_code == 200: 
-         #   message = response.text
             jsonresult = json.loads(response.text)
-            message = {"commune_asked": self.ville,
-                       "commune": jsonresult[0]["nom"],
-                       "code_post": jsonresult[0]["codesPostaux"][0],
-                       "department": jsonresult[0]["departement"]["nom"],
-                       "code_department": jsonresult[0]["codeDepartement"]}
+            message = {
+                "commune_asked": self.ville,
+                "commune": jsonresult[0]["nom"],
+                "code_post": jsonresult[0]["codesPostaux"][0],
+                "surface": jsonresult[0]["surface"],
+                "population": jsonresult[0]["population"],
+                "code_department": jsonresult[0]["codeDepartement"],
+                "department": jsonresult[0]["departement"]["nom"],
+                "region": jsonresult[0]["region"]["nom"]
+                      }
         else: 
            message = "aucun retour"
 
