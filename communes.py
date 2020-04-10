@@ -1,4 +1,4 @@
-import re
+#import re
 import requests
 import json 
 from kalliope.core import NeuronModule
@@ -12,25 +12,43 @@ class Communes(NeuronModule):
     def __init__(self, **kwargs):
         super(Communes, self).__init__(**kwargs)
         self.ville = kwargs.get("nom_ville", None)
-        # get the response of api
-        api_url = "{}{}{}".format(api_url_base, self.ville, api_url_suite)
-        response = requests.get(api_url, headers=headers)
+        
+        # check if parameters have been provided
+        if self._is_parameters_ok():
+        
+            # get the response of api
+            api_url = "{}{}{}".format(api_url_base, self.ville, api_url_suite)
+            response = requests.get(api_url, headers=headers)
 
-        if response.status_code == 200: 
-            jsonresult = json.loads(response.text)
-            message = {
-                "commune_asked": self.ville,
-                "commune": jsonresult[0]["nom"],
-                "code_post": jsonresult[0]["codesPostaux"][0],
-                "surface": jsonresult[0]["surface"],
-                "population": jsonresult[0]["population"],
-                "code_department": jsonresult[0]["codeDepartement"],
-                "department": jsonresult[0]["departement"]["nom"],
-                "region": jsonresult[0]["region"]["nom"]
-                      }
-        else: 
-           message = "aucun retour"
+            if response.status_code == 200: 
+                jsonresult = json.loads(response.text)
+                message = {
+                    "commune_asked": self.ville,
+                    "commune": jsonresult[0]["nom"],
+                    "code_post": jsonresult[0]["codesPostaux"][0],
+                    "surface": jsonresult[0]["surface"],
+                    "population": jsonresult[0]["population"],
+                    "code_department": jsonresult[0]["codeDepartement"],
+                    "department": jsonresult[0]["departement"]["nom"],
+                    "region": jsonresult[0]["region"]["nom"]
+                    }
+            else: 
+                message = "no return"
 
-        self.say(message)
+            self.say(message)
+            
+    def _is_parameters_ok(self):
+   #    """
+   #    Check if received parameters are ok to perform operations in the neuron
+   #    :return: true if parameters are ok, raise an exception otherwise
 
+   #    .. raises:: MissingParameterException
+   #    """
+        if self.ville is None:
+            raise MissingParameterException("You must specify a fr country")
+    #   if not isinstance(self.arg2, int):
+    #       raise MissingParameterException("arg2 must be an integer")
+        return True
+
+# Exemple de retour JSON :
 #[ { "nom": "Mirande", "codesPostaux": [ "32300" ], "surface": 2365.37, "codeDepartement": "32", "codeRegion": "76", "population": 3483, "code": "32256", "_score": 1, "departement": { "code": "32", "nom": "Gers" }, "region": { "code": "76", "nom": "Occitanie" } } ]
