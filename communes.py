@@ -26,13 +26,13 @@ class Communes(NeuronModule):
                     if result["nom"].lower() == self.ville.lower():
                         message = {
                             "commune_asked": self.ville,
-                            "commune": jsonresult[0]["nom"],
-                            "code_post": jsonresult[0]["codesPostaux"][0],
-                            "surface": jsonresult[0]["surface"],
-                            "population": jsonresult[0]["population"],
-                            "code_department": jsonresult[0]["codeDepartement"],
-                            "department": jsonresult[0]["departement"]["nom"],
-                            "region": jsonresult[0]["region"]["nom"]
+                            "commune": result["nom"],
+                            "code_post": result["codesPostaux"][0],
+                            "surface": result["surface"],
+                            "population": result["population"],
+                            "code_department": result["codeDepartement"],
+                            "department": result["departement"]["nom"],
+                            "region": result["region"]["nom"]
                             }
                         break
             else: 
