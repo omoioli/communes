@@ -51,13 +51,13 @@ class Communes(NeuronModule):
                 else:
                     message = {
                         "commune_asked": self.ville,
-                        "commune": none,
-                        "code_post": none,
-                        "surface": none,
-                        "population": none,
-                        "code_department": none,
-                        "department": none,
-                        "region": none
+                        "commune": "inconnue",
+                        "code_post": "inconnue",
+                        "surface": "inconnue",
+                        "population": "inconnue",
+                        "code_department": "inconnue",
+                        "department": "inconnue",
+                        "region": "inconnue"
                         }
                     
             else: 
