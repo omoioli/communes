@@ -19,11 +19,13 @@ class Communes(NeuronModule):
             # get the response of api
             api_url = "{}{}{}".format(api_url_base, self.ville, api_url_suite)
             response = requests.get(api_url, headers=headers)
+            found = False
 
             if response.status_code == 200: 
                 jsonresult = json.loads(response.text)
                 for result in jsonresult:
                     if result["nom"].lower() == self.ville.lower():
+                        found = True
                         message = {
                             "commune_asked": self.ville,
                             "commune": result["nom"],
@@ -35,6 +37,17 @@ class Communes(NeuronModule):
                             "region": result["region"]["nom"]
                             }
                         break
+                 if not found:
+                    message = {
+                        "commune_asked": self.ville,
+                        "commune": result["nom"],
+                        "code_post": result["codesPostaux"][0],
+                        "surface": result["surface"],
+                        "population": result["population"],
+                        "code_department": result["codeDepartement"],
+                        "department": result["departement"]["nom"],
+                        "region": result["region"]["nom"]
+                        }
             else: 
                 message = "no return"
 
