@@ -1,0 +1,10 @@
+---
+- name: kalliope communes
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: "Install pip dependencies"
+      pip:
+        name: requests

@@ -1,0 +1,9 @@
+name: "communes"
+type: "neuron"
+author: "omoioli"
+
+kalliope_supported_version:
+    - 0.5       
+
+tags:
+    - "utils"
