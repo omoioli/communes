@@ -3,7 +3,12 @@ type: "neuron"
 author: "omoioli"
 
 kalliope_supported_version:
-    - 0.5       
+    - 0.5    
+    - 0.6
 
 tags:
-    - "utils"
+    - "communes"
+    - "population"
+    - "département"
+    - "region"
+    - "geo.api.gouv.fr"
