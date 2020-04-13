@@ -77,6 +77,3 @@ class Communes(NeuronModule):
         if not isinstance(self.ville, str):
             raise MissingParameterException("ville must be an string")
         return True
-
-# Exemple JSON respnse:
-#[ { "nom": "Mirande", "codesPostaux": [ "32300" ], "surface": 2365.37, "codeDepartement": "32", "codeRegion": "76", "population": 3483, "code": "32256", "_score": 1, "departement": { "code": "32", "nom": "Gers" }, "region": { "code": "76", "nom": "Occitanie" } } ]
